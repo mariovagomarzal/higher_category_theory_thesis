@@ -1,4 +1,4 @@
-# A Formalization of Higher-Order Categories in Lean 4 - Thesis
+# Thesis: A Formalization of Higher-Order Categories in Lean 4
 
 This repository contains the source code for my thesis document. The Lean 4 code
 of the formalization can be found in [this
