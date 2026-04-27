@@ -7,7 +7,9 @@
   languages.typst = {
     enable = true;
     fontPaths = [
-      "${pkgs.newcomputermodern}/share/fonts/opentype/public/"
+      "${pkgs.eb-garamond}"
+      "${pkgs.texlivePackages.garamond-math}"
+      "${pkgs.inter}"
     ];
   };
 
