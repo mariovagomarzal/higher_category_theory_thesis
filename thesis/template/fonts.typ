@@ -3,10 +3,23 @@
 
 /// Font families used throughout the thesis.
 #let text-fonts = (
-  serif: "EB Garamond 12",
-  serif-small: "EB Garamond 08",
-  math: "Garamond-Math",
-  sans: "Inter",
+  serif: (
+    font: "EB Garamond 12",
+    number-type: "lining",
+  ),
+  serif-small: (
+    font: "EB Garamond 08",
+    number-type: "lining",
+  ),
+  sans: (
+    font: "Inter",
+  ),
+  sans-small: (
+    font: "Inter",
+  ),
+  math: (
+    font: "Garamond-Math",
+  ),
 )
 
 /// Wraps content in the sans-serif font.
@@ -16,7 +29,7 @@
   /// The content to render in sans-serif.
   /// -> content
   body,
-) = text(font: text-fonts.sans, body)
+) = text(..text-fonts.sans, body)
 
 /// Applies the font settings for the thesis.
 ///
@@ -28,22 +41,21 @@
 ) = {
   // Normal text font settings.
   set text(
-    font: text-fonts.serif,
+    ..text-fonts.serif,
     fallback: false,
     size: 11pt,
     fill: palette.text,
-    number-type: "lining", // Force "lining" when using EB Garamond.
   )
 
   // Footnote text font settings.
   show footnote.entry: set text(
-    font: text-fonts.serif-small,
+    ..text-fonts.serif-small,
     size: 9pt,
   )
 
   // Math font settings.
   show math.equation: set text(
-    font: text-fonts.math,
+    ..text-fonts.math,
   )
 
   body
