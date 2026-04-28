@@ -1,4 +1,4 @@
-/// Colors module for the thesis template.
+/// This module defines the color palette used throughout the thesis template.
 
 /// Color palette for the thesis template.
 #let palette = (

@@ -1,4 +1,4 @@
-/// Fonts module for the thesis template.
+/// This module defines the font families and configures text settings for the thesis.
 #import "colors.typ": palette
 
 /// Font families used throughout the thesis.

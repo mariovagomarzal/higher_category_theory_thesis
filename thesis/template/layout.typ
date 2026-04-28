@@ -1,4 +1,4 @@
-/// Layout module for the thesis template.
+/// This module configures page geometry and paragraph settings for the thesis.
 
 /// Applies layout settings for the thesis.
 ///
