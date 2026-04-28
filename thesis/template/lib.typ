@@ -5,11 +5,12 @@
 
 /// Auxiliary function to format a single author/supervisor entry.
 ///
-/// - author (str | content | dict): The author/supervisor to format. Can be a string, content, or a dictionary with
-///   name and affiliation.
-///
 /// -> dict
-#let _format-author(author) = {
+#let _format-author(
+  /// The author/supervisor to format. Can be a string, content, or a dictionary with name and affiliation.
+  /// -> str | content | dict
+  author,
+) = {
   if type(author) == str or type(author) == content {
     return (name: author, affiliation: none)
   } else if type(author) == dict {
@@ -21,11 +22,13 @@
 
 /// Auxiliary function to format author/supervisor information.
 ///
-/// - authors (str | content | dict | array): The author(s) to format. Can be a string, content, dictionary with name
-///   and affiliation, or an array of any of those.
-///
 /// -> array
-#let _format-authors(authors) = {
+#let _format-authors(
+  /// The author(s) to format. Can be a string, content, dictionary with name and affiliation, or an array of any
+  /// of those.
+  /// -> str | content | dict | array
+  authors,
+) = {
   if type(authors) != array {
     return (_format-author(authors),)
   } else {
@@ -35,41 +38,53 @@
 
 /// Auxiliary function to format a list of authors/supervisors into a list of strings with only the names.
 ///
-/// - authors (array): An array of dictionaries with name and affiliation.
-///
 /// -> array
-#let _authors-names(authors) = {
+#let _authors-names(
+  /// An array of dictionaries with name and affiliation.
+  /// -> array
+  authors,
+) = {
   return authors.map(author => author.name)
 }
 
 /// Main thesis template function.
 ///
-/// - title (str | content): The title of the thesis.
-/// - author (str | content | dict | array): The author(s) of the thesis. Can be a string, content, dictionary with name
-///   and affiliation, or an array of any of those.
-/// - supervisor (str | content | dict | array): The supervisor(s) of the thesis. Can be a string, content, dictionary
-///   with name and affiliation, or an array of any of those.
-/// - description (str | content): A short description of the thesis.
-/// - date (auto | datetime): The date of the thesis. If set to auto, it will use the current date.
-/// - location (str | content): The location where the thesis was defended.
-/// - university (str | content): The university where the thesis was defended.
-/// - department (str | content): The department of the university where the thesis was defended.
-/// - degree (str | content): The degree for which the thesis was submitted.
-/// - lang (str): The language of the thesis (default: "en").
-/// - body (content): The main content of the thesis.
-///
 /// -> content
 #let thesis(
+  /// The title of the thesis.
+  /// -> str | content
   title: none,
+  /// The author(s) of the thesis. Can be a string, content, dictionary with name and affiliation, or an array of
+  /// any of those.
+  /// -> str | content | dict | array
   author: (),
+  /// The supervisor(s) of the thesis. Can be a string, content, dictionary with name and affiliation, or an array
+  /// of any of those.
+  /// -> str | content | dict | array
   supervisor: (),
+  /// A short description of the thesis.
+  /// -> str | content
   description: none,
+  /// The date of the thesis. If set to auto, it will use the current date.
+  /// -> auto | datetime
   date: auto,
+  /// The location where the thesis was defended.
+  /// -> str | content
   location: none,
+  /// The university where the thesis was defended.
+  /// -> str | content
   university: none,
+  /// The department of the university where the thesis was defended.
+  /// -> str | content
   department: none,
+  /// The degree for which the thesis was submitted.
+  /// -> str | content
   degree: none,
+  /// The language of the thesis (default: "en").
+  /// -> str
   lang: "en",
+  /// The main content of the thesis.
+  /// -> content
   body,
 ) = {
   // Normalize authors and supervisors to arrays of dictionaries with name and affiliation.

@@ -11,17 +11,21 @@
 
 /// Wraps content in the sans-serif font.
 ///
-/// - body (content): The content to render in sans-serif.
-///
 /// -> content
-#let sans-serif(body) = text(font: text-fonts.sans, body)
+#let sans-serif(
+  /// The content to render in sans-serif.
+  /// -> content
+  body,
+) = text(font: text-fonts.sans, body)
 
 /// Applies the font settings for the thesis.
 ///
-/// - body (content): The content to apply font settings to.
-///
 /// -> content
-#let _fonts-setup(body) = {
+#let _fonts-setup(
+  /// The content to apply font settings to.
+  /// -> content
+  body,
+) = {
   // Normal text font settings.
   set text(
     font: text-fonts.serif,

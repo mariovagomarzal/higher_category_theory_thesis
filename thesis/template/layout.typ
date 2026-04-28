@@ -2,10 +2,12 @@
 
 /// Applies layout settings for the thesis.
 ///
-/// - body (content): The content to apply layout settings to.
-///
 /// -> content
-#let _layout-setup(body) = {
+#let _layout-setup(
+  /// The content to apply layout settings to.
+  /// -> content
+  body,
+) = {
   // Page settings.
   set page(
     paper: "a4",
