@@ -2,7 +2,7 @@
 #import "colors.typ": palette
 
 /// Font families used throughout the thesis.
-#let text-fonts = (
+#let font-families = (
   serif: (
     font: "EB Garamond 12",
     number-type: "lining",
@@ -22,14 +22,11 @@
   ),
 )
 
-/// Wraps content in the sans-serif font.
-///
-/// -> content
-#let sans-serif(
-  /// The content to render in sans-serif.
-  /// -> content
-  body,
-) = text(..text-fonts.sans, body)
+/// Font sizes used throughout the thesis.
+#let font-sizes = (
+  normal: 11pt,
+  footnote: 9pt,
+)
 
 /// Applies the font settings for the thesis.
 ///
@@ -41,21 +38,21 @@
 ) = {
   // Normal text font settings.
   set text(
-    ..text-fonts.serif,
-    fallback: false,
-    size: 11pt,
+    ..font-families.serif,
+    size: font-sizes.normal,
     fill: palette.text,
+    fallback: false,
   )
 
   // Footnote text font settings.
   show footnote.entry: set text(
-    ..text-fonts.serif-small,
-    size: 9pt,
+    ..font-families.serif-small,
+    size: font-sizes.footnote,
   )
 
   // Math font settings.
   show math.equation: set text(
-    ..text-fonts.math,
+    ..font-families.math,
   )
 
   body
