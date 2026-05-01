@@ -15,7 +15,10 @@
   if type(author) == str or type(author) == content {
     return (name: author, affiliation: none)
   } else if type(author) == dict {
-    return (name: author.name, affiliation: author.affiliation) // FIXME: Don't assume the keys exist.
+    return (
+      name: author.at("name", default: none),
+      affiliation: author.at("affiliation", default: none),
+    )
   } else {
     error("Invalid author/supervisor format")
   }
