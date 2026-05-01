@@ -9,7 +9,7 @@
     fontPaths = [
       "${pkgs.eb-garamond}"
       "${pkgs.texlivePackages.garamond-math}"
-      "${pkgs.inter}"
+      "${pkgs.fira-sans}"
     ];
   };
 

@@ -12,15 +12,18 @@
     number-type: "lining",
   ),
   sans: (
-    font: "Inter",
+    font: "Fira Sans",
   ),
   sans-small: (
-    font: "Inter",
+    font: "Fira Sans",
   ),
   math: (
     font: "Garamond-Math",
   ),
 )
+
+/// Scaling factor applied to sans-serif font sizes so they appear optically matched to the serif text.
+#let sans-ratio = 0.8
 
 /// Font sizes used throughout the thesis.
 #let font-sizes = (
