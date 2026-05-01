@@ -1,7 +1,8 @@
 /// Thesis template entry point.
 #import "colors.typ": palette
 #import "layout.typ": _layout-setup
-#import "fonts.typ": font-families, font-sizes, _fonts-setup
+#import "fonts.typ": font-families, font-sizes, sans-ratio, _fonts-setup
+#import "headings.typ": _headings-setup, chapter
 
 /// Auxiliary function to format a single author/supervisor entry.
 ///
@@ -83,10 +84,20 @@
   /// The language of the thesis (default: "en").
   /// -> str
   lang: "en",
+  /// The output mode of the thesis. Use `"print"` for print-ready output
+  /// (chapters start on odd pages) or `"digital"` for screen reading.
+  /// -> str
+  output: "digital",
   /// The main content of the thesis.
   /// -> content
   body,
 ) = {
+  // Validate output mode.
+  assert(
+    output in ("digital", "print",),
+    message: "Invalid output mode: expected 'digital' or 'print', got '" + output + "'",
+  )
+
   // Normalize authors and supervisors to arrays of dictionaries with name and affiliation.
   let authors = _format-authors(author)
   let supervisors = _format-authors(supervisor)
@@ -108,6 +119,7 @@
   // Other style settings.
   show: _layout-setup
   show: _fonts-setup
+  show: _headings-setup.with(output: output)
 
   body
 }
