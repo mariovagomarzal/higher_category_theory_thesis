@@ -1,6 +1,6 @@
 /// Thesis template entry point.
 #import "colors.typ": palette
-#import "layout.typ": _layout-setup
+#import "layout.typ": margins, _layout-setup
 #import "fonts.typ": font-families, font-sizes, sans-ratio, _fonts-setup
 #import "headings.typ": _headings-setup, chapter
 
@@ -117,7 +117,7 @@
   set text(lang: lang)
 
   // Other style settings.
-  show: _layout-setup
+  show: _layout-setup.with(output: output)
   show: _fonts-setup
   show: _headings-setup.with(output: output)
 
