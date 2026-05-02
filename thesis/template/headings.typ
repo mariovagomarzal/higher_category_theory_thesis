@@ -1,6 +1,6 @@
 /// This module defines heading styles and the chapter page layout for the thesis.
 #import "colors.typ": palette
-#import "fonts.typ": font-families, font-sizes, sans-ratio
+#import "fonts.typ": font-families, font-sizes, sans-ratio, _ui-font-style
 #import "num2words.typ": num2words
 
 /// Font sizes for heading elements.
@@ -16,7 +16,6 @@
 /// Spacing values for heading elements.
 #let _heading-skips = (
   chapter-page-before: 30%,
-  chapter-page-after: 10%,
   chapter-before: 30pt,
   chapter-after: 30pt,
   chapter-label-gap: 15pt,
@@ -28,14 +27,6 @@
   heading-before: 20pt,
   heading-after: 15pt,
   heading-number-gap: 8pt,
-)
-
-/// Shared text style for UI-like sans-serif elements (heading numbers, chapter labels).
-#let _ui-sans-style = (
-  ..font-families.sans,
-  weight: "light",
-  tracking: 1pt,
-  fill: palette.text-muted,
 )
 
 /// Factor to compute the heading number size from its title size.
@@ -50,22 +41,28 @@
   title-size,
 ) = sans-ratio * _number-scale * title-size
 
-/// Renders a subsection-style heading (used for levels >= 3).
+/// State tracking whether the current page is a standalone chapter page.
+#let _standalone-chapter-page = state("_standalone-chapter-page", false)
+
+/// State tracking whether the current page is a blank page inserted before a chapter.
+#let _chapter-blank-page = state("_chapter-blank-page", false)
+
+/// Renders a general heading element with the given font size for the title.
 ///
 /// -> content
-#let _subsection(
+#let _heading(
   /// The heading element to render.
   /// -> dict
   it,
   /// The font size for the heading title.
   /// -> length
   title-size,
-) = {
-  v(_heading-skips.heading-before, weak: true)
-
+) = block(
+  above: _heading-skips.heading-before,
+  below: _heading-skips.heading-after,
   block({
     text(
-      .._ui-sans-style,
+      .._ui-font-style,
       size: _number-size(title-size),
       counter(heading).display(it.numbering),
     )
@@ -77,13 +74,85 @@
       fill: palette.text,
       it.body,
     )
-  })
+  }),
+)
 
-  v(_heading-skips.heading-after, weak: true)
-}
+/// Renders a chapter heading with its label, number, and title.
+///
+/// -> content
+#let _chapter(it) = block(
+  below: _heading-skips.chapter-after,
+  {
+    let is-numbered = it.numbering != none
 
-/// State tracking whether the current page is a chapter opening page.
-#let is-chapter-page = state("is-chapter-page", false)
+    let heading-number = {
+      if is-numbered {
+        let heading-counter = counter(heading)
+
+        (text(
+          .._ui-font-style,
+          size: _heading-font-sizes.chapter-label,
+          upper[#it.supplement #num2words(heading-counter.get().at(0))],
+        ))
+
+        v(_heading-skips.chapter-label-gap, weak: true)
+
+        text(
+          size: _heading-font-sizes.chapter-number,
+          fill: palette.text,
+          heading-counter.display(it.numbering),
+        )
+      }
+    }
+
+    let heading-title = block(
+      width: 50%,
+      text(
+        size: _heading-font-sizes.chapter-title,
+        fill: palette.text,
+        it.body,
+      )
+    )
+    
+    if _standalone-chapter-page.get() {
+      v(_heading-skips.chapter-page-before)
+    } else {
+      v(_heading-skips.chapter-before)
+    }
+
+    heading-number
+    v(_heading-skips.chapter-title-gap, weak: true)
+    heading-title
+  },
+)
+
+/// Renders a section heading with the section symbol, number, and title.
+///
+/// -> content
+#let _section(it) = block(
+  above: _heading-skips.section-before,
+  below: _heading-skips.section-after,
+  {
+    text(
+      .._ui-font-style,
+      size: _number-size(_heading-font-sizes.section-title),
+      [#sym.section #counter(heading).display(it.numbering)],
+    )
+
+    v(_heading-skips.section-title-gap, weak: true)
+
+    text(
+      size: _heading-font-sizes.section-title,
+      fill: palette.text,
+      it.body,
+    )
+  },
+)
+
+/// Renders a subsection heading using the generic heading layout.
+///
+/// -> content
+#let _subsection(it) = _heading(it, _heading-font-sizes.subsection-title)
 
 /// Applies heading styles for the thesis.
 ///
@@ -111,89 +180,28 @@
   )
 
   // Fallback show-rule for headings with level higher than 3.
-  show heading: it => _subsection(it, _heading-font-sizes.fallback-title)
+  show heading: it => _heading(it, _heading-font-sizes.fallback-title)
 
   // Chapters: level 1 headings.
   show heading.where(level: 1): set heading(supplement: [Chapter]) // TODO: Make it language-aware.
 
   show heading.where(level: 1): it => {
     if output == "print" {
+      _chapter-blank-page.update(true)
       pagebreak(to: "odd", weak: true)
+      _chapter-blank-page.update(false)
     } else {
       pagebreak(weak: true)
     }
 
-    if is-chapter-page.get() {
-      v(_heading-skips.chapter-page-before)
-    } else {
-      v(_heading-skips.chapter-before)
-    }
-
-    let is-numbered = it.numbering != none
-
-    let heading-number = {
-      if is-numbered {
-        let heading-counter = counter(heading)
-
-        (text(
-          .._ui-sans-style,
-          size: _heading-font-sizes.chapter-label,
-          upper[#it.supplement #num2words(heading-counter.get().at(0))],
-        ))
-
-        v(_heading-skips.chapter-label-gap, weak: true)
-
-        text(
-          size: _heading-font-sizes.chapter-number,
-          fill: palette.text,
-          heading-counter.display(it.numbering),
-        )
-      }
-    }
-
-    let heading-title = block(
-      width: 50%,
-      text(
-        size: _heading-font-sizes.chapter-title,
-        fill: palette.text,
-        it.body,
-      )
-    )
-
-    block({
-      heading-number
-      v(_heading-skips.chapter-title-gap, weak: true)
-      heading-title
-    })
-
-    v(_heading-skips.chapter-after, weak: true)
+    _chapter(it)
   }
 
   // Sections: level 2 headings.
-  show heading.where(level: 2): it => {
-    v(_heading-skips.section-before, weak: true)
-
-    block({
-      text(
-        .._ui-sans-style,
-        size: _number-size(_heading-font-sizes.section-title),
-        [#sym.section #counter(heading).display(it.numbering)],
-      )
-
-      v(_heading-skips.section-title-gap, weak: true)
-
-      text(
-        size: _heading-font-sizes.section-title,
-        fill: palette.text,
-        it.body,
-      )
-    })
-
-    v(_heading-skips.section-after, weak: true)
-  }
+  show heading.where(level: 2): it => _section(it)
 
   // Subsections: level 3 headings.
-  show heading.where(level: 3): it => _subsection(it, _heading-font-sizes.subsection-title)
+  show heading.where(level: 3): it => _subsection(it)
 
   body
 }
@@ -212,7 +220,7 @@
   /// -> none | content
   author-line: none,
 ) = {
-  is-chapter-page.update(true)
+  _standalone-chapter-page.update(true)
 
   heading(
     level: 1,
@@ -254,9 +262,7 @@
     })
   }
 
+  _standalone-chapter-page.update(false)
+
   pagebreak(weak: true)
-
-  is-chapter-page.update(false)
-
-  v(_heading-skips.chapter-page-after)
 }

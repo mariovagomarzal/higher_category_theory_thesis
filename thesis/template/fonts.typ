@@ -31,6 +31,14 @@
   footnote: 9pt,
 )
 
+/// Font style for UI-like elements (heading numbers, running heads, ...).
+#let _ui-font-style = (
+  ..font-families.sans,
+  weight: "light",
+  tracking: 1pt,
+  fill: palette.text-muted,
+)
+
 /// Applies the font settings for the thesis.
 ///
 /// -> content
