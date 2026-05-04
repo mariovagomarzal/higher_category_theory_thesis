@@ -63,7 +63,10 @@
 #let thesis(
   /// The title of the thesis.
   /// -> str | content
-  title: none,
+  title: [],
+  /// The subtitle of the thesis.
+  /// -> str | content
+  subtitle: [],
   /// The author(s) of the thesis. Can be a string, content, dictionary with name and affiliation, or an array of
   /// any of those.
   /// -> str | content | dict | array
@@ -74,22 +77,22 @@
   supervisor: (),
   /// A short description of the thesis.
   /// -> str | content
-  description: none,
+  description: [],
   /// The date of the thesis. If set to auto, it will use the current date.
   /// -> auto | datetime
   date: auto,
   /// The location where the thesis was defended.
   /// -> str | content
-  location: none,
+  location: [],
   /// The university where the thesis was defended.
   /// -> str | content
-  university: none,
+  university: [],
   /// The department of the university where the thesis was defended.
   /// -> str | content
-  department: none,
+  department: [],
   /// The degree for which the thesis was submitted.
   /// -> str | content
-  degree: none,
+  degree: [],
   /// The language of the thesis (default: "en").
   /// -> str
   lang: "en",
