@@ -1,6 +1,5 @@
 /// Thesis template entry point.
 #import "colors.typ": palette
-#import "layout.typ": margins, _layout-setup
 #import "fonts.typ": (
   font-families,
   font-sizes,
@@ -8,6 +7,7 @@
   font-styles,
   _fonts-setup
 )
+#import "layout.typ": margins, _layout-setup
 #import "headings.typ": _headings-setup, chapter
 
 /// Auxiliary function to format a single author/supervisor entry.
@@ -129,8 +129,8 @@
   set text(lang: lang)
 
   // Other style settings.
-  show: _layout-setup.with(output: output)
   show: _fonts-setup
+  show: _layout-setup.with(output: output)
   show: _headings-setup.with(output: output)
 
   body

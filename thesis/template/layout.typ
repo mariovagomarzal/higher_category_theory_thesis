@@ -2,7 +2,32 @@
 #import "@preview/hydra:0.6.2": hydra
 #import "colors.typ": palette
 #import "fonts.typ": font-sizes, font-styles
-#import "headings.typ": _standalone-chapter-page, _chapter-blank-page
+
+/// State indicating whether the current page is a blank page inserted to force a recto start.
+#let _is-blank-page = state("_is-blank-page", false)
+
+/// Inserts a page break, forcing the next page to be a recto in print mode.
+///
+/// -> content
+#let _blank-page(
+  /// Whether the page break is weak (skipped if the current page is already empty).
+  /// -> bool
+  weak: false,
+  /// The output mode of the thesis ("digital" or "print").
+  /// -> str
+  output
+) = {
+  if output == "print" {
+    _is-blank-page.update(true)
+    pagebreak(to: "odd", weak: weak)
+    _is-blank-page.update(false)
+  } else {
+    pagebreak(weak: weak)
+  }
+}
+
+/// State indicating whether the current page is a chapter opening page.
+#let _is-chapter-page = state("_is-chapter-page", false)
 
 /// Page margins used throughout the thesis.
 #let margins = (
@@ -91,9 +116,9 @@
       margins.normal
     },
     header: context {
-      if not _standalone-chapter-page.get() {
+      if not _is-chapter-page.get() {
         if output == "print" and calc.even(here().page()) {
-          if not _chapter-blank-page.get() {
+          if not _is-blank-page.get() {
             _header(
               counter(page).display(_page-display),
               hydra(1, display: _chapter-display, book: true),

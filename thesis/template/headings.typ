@@ -1,6 +1,7 @@
 /// This module defines heading styles and the chapter page layout for the thesis.
 #import "colors.typ": palette
 #import "fonts.typ": font-families, font-sizes, sans-ratio, font-styles
+#import "layout.typ": _blank-page, _is-chapter-page
 #import "num2words.typ": num2words
 
 /// Font sizes for heading elements.
@@ -41,12 +42,6 @@
   title-size,
 ) = sans-ratio * _number-scale * title-size
 
-/// State tracking whether the current page is a standalone chapter page.
-#let _standalone-chapter-page = state("_standalone-chapter-page", false)
-
-/// State tracking whether the current page is a blank page inserted before a chapter.
-#let _chapter-blank-page = state("_chapter-blank-page", false)
-
 /// Renders a general heading element with the given font size for the title.
 ///
 /// -> content
@@ -80,7 +75,7 @@
 /// Renders a chapter heading with its label, number, and title.
 ///
 /// -> content
-#let _chapter(it) = block(
+#let _chapter(output, it) = _blank-page(output, weak: true) + block(
   below: _heading-skips.chapter-after,
   {
     let is-numbered = it.numbering != none
@@ -114,7 +109,7 @@
       )
     )
     
-    if _standalone-chapter-page.get() {
+    if _is-chapter-page.get() {
       v(_heading-skips.chapter-page-before)
     } else {
       v(_heading-skips.chapter-before)
@@ -185,23 +180,13 @@
   // Chapters: level 1 headings.
   show heading.where(level: 1): set heading(supplement: [Chapter]) // TODO: Make it language-aware.
 
-  show heading.where(level: 1): it => {
-    if output == "print" {
-      _chapter-blank-page.update(true)
-      pagebreak(to: "odd", weak: true)
-      _chapter-blank-page.update(false)
-    } else {
-      pagebreak(weak: true)
-    }
-
-    _chapter(it)
-  }
+  show heading.where(level: 1): it => _chapter(output, it)
 
   // Sections: level 2 headings.
-  show heading.where(level: 2): it => _section(it)
+  show heading.where(level: 2): _section
 
   // Subsections: level 3 headings.
-  show heading.where(level: 3): it => _subsection(it)
+  show heading.where(level: 3): _subsection
 
   body
 }
@@ -220,7 +205,7 @@
   /// -> none | content
   author-line: none,
 ) = {
-  _standalone-chapter-page.update(true)
+  _is-chapter-page.update(true)
 
   heading(
     level: 1,
@@ -264,7 +249,7 @@
     )
   }
 
-  _standalone-chapter-page.update(false)
+  _is-chapter-page.update(false)
 
   pagebreak(weak: true)
 }
