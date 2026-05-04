@@ -1,6 +1,6 @@
 /// This module defines heading styles and the chapter page layout for the thesis.
 #import "colors.typ": palette
-#import "fonts.typ": font-families, font-sizes, sans-ratio, _ui-font-style
+#import "fonts.typ": font-families, font-sizes, sans-ratio, font-styles
 #import "num2words.typ": num2words
 
 /// Font sizes for heading elements.
@@ -62,7 +62,7 @@
   below: _heading-skips.heading-after,
   block({
     text(
-      .._ui-font-style,
+      ..font-styles.ui,
       size: _number-size(title-size),
       counter(heading).display(it.numbering),
     )
@@ -90,7 +90,7 @@
         let heading-counter = counter(heading)
 
         (text(
-          .._ui-font-style,
+          ..font-styles.ui,
           size: _heading-font-sizes.chapter-label,
           upper[#it.supplement #num2words(heading-counter.get().at(0))],
         ))
@@ -134,7 +134,7 @@
   below: _heading-skips.section-after,
   {
     text(
-      .._ui-font-style,
+      ..font-styles.ui,
       size: _number-size(_heading-font-sizes.section-title),
       [#sym.section #counter(heading).display(it.numbering)],
     )
@@ -238,28 +238,30 @@
 
     v(_heading-skips.chapter-quote-gap, weak: true)
 
-    set par(leading: 0.8em)
+    block(
+      width: 60%, 
+      {
+        set par(leading: 0.8em)
 
-    set text(fill: palette.text-muted)
-
-    block(width: 60%, {
-      text(
-        ..font-families.serif,
-        size: font-sizes.normal,
-        style: "italic",
-        quote,
-      )
-
-      if author-line != none {
-        linebreak()
+        set text(fill: palette.text-muted)
+        
         text(
-          ..font-families.sans,
-          size: sans-ratio * font-sizes.normal,
-          weight: "light",
-          [--- #author-line],
+          ..font-styles.quote,
+          size: font-sizes.normal,
+          quote,
         )
+
+        if author-line != none {
+          linebreak()
+          text(
+            ..font-families.sans,
+            size: sans-ratio * font-sizes.normal,
+            weight: "light",
+            [--- #author-line],
+          )
+        }
       }
-    })
+    )
   }
 
   _standalone-chapter-page.update(false)

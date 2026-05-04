@@ -1,7 +1,7 @@
 /// This module configures page geometry and paragraph settings for the thesis.
 #import "@preview/hydra:0.6.2": hydra
 #import "colors.typ": palette
-#import "fonts.typ": font-sizes, _ui-font-style
+#import "fonts.typ": font-sizes, font-styles
 #import "headings.typ": _standalone-chapter-page, _chapter-blank-page
 
 /// Page margins used throughout the thesis.
@@ -46,7 +46,7 @@
   right,
 ) = {
   set text(
-    .._ui-font-style,
+    ..font-styles.ui,
     size: font-sizes.footnote,
   )
   
@@ -62,6 +62,9 @@
     ),
   )
 }
+
+/// Format in which page numbers are displayed.
+#let _page-display = "1"
 
 /// Applies layout settings for the thesis.
 ///
@@ -92,14 +95,14 @@
         if output == "print" and calc.even(here().page()) {
           if not _chapter-blank-page.get() {
             _header(
-              counter(page).display(),
+              counter(page).display(_page-display),
               hydra(1, display: _chapter-display, book: true),
             )
           };
         } else {
           _header(
             hydra(2, display: _section-display, book: output == "print"),
-            counter(page).display(),
+            counter(page).display(_page-display),
           )
         }
       }

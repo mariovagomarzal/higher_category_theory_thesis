@@ -1,7 +1,13 @@
 /// Thesis template entry point.
 #import "colors.typ": palette
 #import "layout.typ": margins, _layout-setup
-#import "fonts.typ": font-families, font-sizes, sans-ratio, _fonts-setup
+#import "fonts.typ": (
+  font-families,
+  font-sizes,
+  sans-ratio,
+  font-styles,
+  _fonts-setup
+)
 #import "headings.typ": _headings-setup, chapter
 
 /// Auxiliary function to format a single author/supervisor entry.

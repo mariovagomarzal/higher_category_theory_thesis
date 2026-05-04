@@ -31,12 +31,23 @@
   footnote: 9pt,
 )
 
-/// Font style for UI-like elements (heading numbers, running heads, ...).
-#let _ui-font-style = (
-  ..font-families.sans,
-  weight: "light",
-  tracking: 1pt,
-  fill: palette.text-muted,
+/// Font styles used throughout the thesis.
+#let font-styles = (
+  normal: (
+    ..font-families.serif,
+    fill: palette.text,
+  ),
+  quote: (
+    ..font-families.serif,
+    style: "italic",
+    fill: palette.text-muted,
+  ),
+  ui: (
+    ..font-families.sans,
+    weight: "light",
+    tracking: 1pt,
+    fill: palette.text-muted,
+  ),
 )
 
 /// Applies the font settings for the thesis.
@@ -49,9 +60,8 @@
 ) = {
   // Normal text font settings.
   set text(
-    ..font-families.serif,
+    ..font-styles.normal,
     size: font-sizes.normal,
-    fill: palette.text,
     fallback: false,
   )
 
