@@ -88,8 +88,8 @@
   )
 }
 
-/// Format in which page numbers are displayed.
-#let _page-display = "1"
+/// State storing the format in which page numbers are displayed.
+#let _page-display = state("_page-display", "1")
 
 /// Applies layout settings for the thesis.
 ///
@@ -120,18 +120,19 @@
         if output == "print" and calc.even(here().page()) {
           if not _is-blank-page.get() {
             _header(
-              counter(page).display(_page-display),
+              counter(page).display(_page-display.get()),
               hydra(1, display: _chapter-display, book: true),
             )
           };
         } else {
           _header(
             hydra(2, display: _section-display, book: output == "print"),
-            counter(page).display(_page-display),
+            counter(page).display(_page-display.get()),
           )
         }
       }
     },
+    footer: none,
   )
 
   // Paragraph settings.

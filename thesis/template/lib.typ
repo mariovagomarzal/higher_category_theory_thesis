@@ -7,7 +7,7 @@
   font-styles,
   _fonts-setup
 )
-#import "layout.typ": margins, _layout-setup
+#import "layout.typ": margins, _layout-setup, _page-display
 #import "headings.typ": _headings-setup, chapter
 
 /// Auxiliary function to format a single author/supervisor entry.
