@@ -5,15 +5,33 @@ en:
   chapter: "chapter"
   section: "section"
   subsection: "subsection"
+  author: "author"
+  authors: "authors"
+  supervisor: "supervisor"
+  supervisors: "supervisors"
+  department: "department"
+  defence: "defence"
 
 # Spanish.
 es:
   chapter: "capítulo"
   section: "sección"
   subsection: "subsección"
+  author: "autor"
+  authors: "autores"
+  supervisor: "supervisor"
+  supervisors: "supervisores"
+  department: "departamento"
+  defence: "defensa"
 
 # Catalan.
 ca:
   chapter: "capítol"
   section: "secció"
   subsection: "subsecció"
+  author: "autor"
+  authors: "autors"
+  supervisor: "supervisor"
+  supervisors: "supervisors"
+  department: "departament"
+  defence: "defensa"

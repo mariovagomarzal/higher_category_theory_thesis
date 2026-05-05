@@ -10,6 +10,7 @@
 )
 #import "layout.typ": margins, _layout-setup, _page-display
 #import "headings.typ": _headings-setup, chapter
+#import "title-page.typ": title-page
 
 /// Auxiliary function to format a single author/supervisor entry.
 ///
@@ -18,17 +19,15 @@
   /// The author/supervisor to format. Can be a string, content, or a dictionary with name and affiliation.
   /// -> str | content | dict
   author,
-) = {
-  if type(author) == str or type(author) == content {
-    return (name: author, affiliation: none)
-  } else if type(author) == dict {
-    return (
-      name: author.at("name", default: none),
-      affiliation: author.at("affiliation", default: none),
-    )
-  } else {
-    panic("Invalid author/supervisor format")
-  }
+) = if type(author) == str or type(author) == content {
+  (name: author, affiliation: none)
+} else if type(author) == dict {
+  (
+    name: author.at("name", default: none),
+    affiliation: author.at("affiliation", default: none),
+  )
+} else {
+  panic("Invalid author/supervisor format")
 }
 
 /// Auxiliary function to format author/supervisor information.
@@ -39,12 +38,10 @@
   /// of those.
   /// -> str | content | dict | array
   authors,
-) = {
-  if type(authors) != array {
-    return (_format-author(authors),)
-  } else {
-    return authors.map(_format-author)
-  }
+) = if type(authors) != array {
+  (_format-author(authors),)
+} else {
+  authors.map(_format-author)
 }
 
 /// Auxiliary function to format a list of authors/supervisors into a list of strings with only the names.
@@ -54,9 +51,7 @@
   /// An array of dictionaries with name and affiliation.
   /// -> array
   authors,
-) = {
-  return authors.map(author => author.name)
-}
+) = authors.map(author => author.name)
 
 /// Auxiliary function to format a date according to a given format string. If the date is `auto`, the current date
 /// is used. If the date is not a `datetime`, it is returned as-is.
@@ -105,6 +100,9 @@
   /// The date of the document. If set to `auto`, the current date will be used.
   /// -> auto | datetime
   date: auto,
+  /// The type of work (e.g. "Final Project", "Master's Thesis").
+  /// -> str | content
+  work-type: [],
   /// The academic year of the thesis. If set to `auto`, the current year will be used.
   /// -> auto | datetime | str | content,
   academic-year: auto,
@@ -120,6 +118,9 @@
   /// The university where the thesis was defended.
   /// -> str | content
   university: [],
+  /// The faculty of the university where the thesis was defended.
+  /// -> str | content
+  faculty: [],
   /// The department of the university where the thesis was defended.
   /// -> str | content
   department: [],
@@ -167,6 +168,30 @@
   show: _fonts-setup
   show: _layout-setup.with(output: output)
   show: _headings-setup.with(output: output)
+
+  // Front matter elements.
+  {
+    _page-display.update("I")
+
+    // Title page.
+    title-page(
+      title: title,
+      subtitle: subtitle,
+      work-type: work-type,
+      authors: authors,
+      supervisors: supervisors,
+      academic-year: academic-year-content,
+      defence: defence-content,
+      version: version,
+      location: location,
+      university: university,
+      faculty: faculty,
+      department: department,
+      degree: degree,
+    )
+
+    _page-display.update("1")
+  }
 
   body
 }
