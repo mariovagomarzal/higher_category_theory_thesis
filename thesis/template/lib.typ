@@ -11,6 +11,7 @@
 #import "layout.typ": margins, _layout-setup, _page-display
 #import "headings.typ": _headings-setup, chapter
 #import "title-page.typ": title-page
+#import "acknowledgements.typ": acknowledgements-page
 
 /// Auxiliary function to format a single author/supervisor entry.
 ///
@@ -127,8 +128,13 @@
   /// The degree for which the thesis was submitted.
   /// -> str | content
   degree: [],
-  /// The output mode of the thesis. Use `"print"` for print-ready output
-  /// (chapters start on odd pages) or `"digital"` for screen reading.
+  /// The acknowledgements text displayed on its own front matter page.
+  /// -> str | content
+  acknowledgements: [],
+  /// The copyright/license notice displayed in the colophon below the acknowledgements.
+  /// -> str | content
+  copyright: [],
+  /// The output mode of the thesis. Use `"print"` for print-ready output or `"digital"` for screen reading.
   /// -> str
   output: "digital",
   /// The main content of the thesis.
@@ -188,6 +194,18 @@
       faculty: faculty,
       department: department,
       degree: degree,
+      output: output,
+    )
+
+    // Acknowledgements page.
+    acknowledgements-page(
+      acknowledgements: acknowledgements,
+      title: title,
+      authors: authors,
+      copyright: copyright,
+      version: version,
+      location: location,
+      date: document-date,
       output: output,
     )
 
