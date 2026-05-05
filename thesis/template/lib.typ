@@ -57,6 +57,29 @@
   return authors.map(author => author.name)
 }
 
+/// Auxiliary function to format a date according to a given format string. If the date is `auto`, the current date
+/// is used. If the date is not a `datetime`, it is returned as-is.
+///
+/// -> str | content
+#let _date-display(
+  /// The date to format. If set to `auto`, the current date will be used.
+  /// -> auto | datetime | str | content
+  date,
+  /// The format string used when `date` is a `datetime` (see Typst's `datetime.display`).
+  /// -> str
+  format,
+) = {
+  if date == auto {
+    date = datetime.today()
+  }
+
+  if type(date) == datetime {
+    return date.display(format)
+  } else {
+    return date
+  }
+}
+
 /// Main thesis template function.
 ///
 /// -> content
@@ -78,9 +101,18 @@
   /// A short description of the thesis.
   /// -> str | content
   description: [],
-  /// The date of the thesis. If set to auto, it will use the current date.
+  /// The date of the document. If set to `auto`, the current date will be used.
   /// -> auto | datetime
   date: auto,
+  /// The academic year of the thesis. If set to `auto`, the current year will be used.
+  /// -> auto | datetime | str | content,
+  academic-year: auto,
+  /// The date of the thesis defence. If set to `auto`, the current date will be used.
+  /// -> auto | datetime | str | content,
+  defence: auto,
+  /// The version of the thesis.
+  /// -> str | content
+  version: [],
   /// The location where the thesis was defended.
   /// -> str | content
   location: [],
@@ -114,15 +146,23 @@
   let authors = _format-authors(author)
   let supervisors = _format-authors(supervisor)
 
-  // If date is set to auto, use the current date.
-  if date == auto { date = datetime.today() }
+  // Normalize document date.
+  let document-date = if date == auto {
+    datetime.today()
+  } else {
+    date
+  }
+
+  // Normalize academic-year and defence dates.
+  let academic-year-content = _date-display(academic-year, "[year]")
+  let defence-content = _date-display(defence, "[month repr:long] [day], [year]")
 
   // Document metadata.
   set document(
     title: title,
     author: _authors-names(authors),
     description: description,
-    date: date,
+    date: document-date,
   )
 
   // Language.
