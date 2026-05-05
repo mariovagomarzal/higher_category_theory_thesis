@@ -19,7 +19,7 @@
   /// The reference date used to extract the copyright year.
   /// -> datetime
   date,
-) = sym.copyright + [ ] + date.display("[year]") + [ ] + authors.map(author => author.name).join(", ")
+) = (sym.copyright, date.display("[year]"), authors.map(author => author.name).join(", ")).join(" ")
 
 /// Renders the version, location, and date footer line of the colophon.
 ///
@@ -34,7 +34,7 @@
   /// The reference date used to render the month and year.
   /// -> datetime
   date,
-) = version + [ · ] + location + [ · ] + date.display("[month repr:long] [year]")
+) = (version, location, date.display("[month repr:long] [year]")).join([ · ])
 
 /// Renders the acknowledgements page along with the colophon block at the bottom.
 ///
