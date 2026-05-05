@@ -1,9 +1,9 @@
 /// This module defines heading styles and the chapter page layout for the thesis.
+#import "@preview/num2words:0.1.0": num2words
 #import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": font-families, font-sizes, sans-ratio, font-styles
 #import "layout.typ": _blank-page, _is-chapter-page
-#import "num2words.typ": num2words
 
 /// Font sizes for heading elements.
 #let _heading-font-sizes = (
