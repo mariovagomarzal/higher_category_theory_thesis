@@ -3,7 +3,7 @@
 #import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": sans-ratio, font-styles
-#import "layout.typ": margins
+#import "layout.typ": margins, _blank-page
 
 /// Font sizes used by the title page.
 #let _title-page-font-sizes = (
@@ -101,12 +101,18 @@
   /// The degree name.
   /// -> str | content
   degree: [],
+  /// The output mode of the thesis.
+  /// -> str
+  output: "digital",
 ) = {
+  _blank-page(output, weak: true)
+
   set page(
     margin: margins.normal,
     header: none,
     footer: none,
   )
+
   set par(
     justify: false,
     first-line-indent: 0pt,
@@ -190,4 +196,6 @@
 
     version
   })
+
+  _blank-page(output, weak: true)
 }

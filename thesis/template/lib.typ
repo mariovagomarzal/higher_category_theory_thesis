@@ -188,6 +188,7 @@
       faculty: faculty,
       department: department,
       degree: degree,
+      output: output,
     )
 
     _page-display.update("1")
