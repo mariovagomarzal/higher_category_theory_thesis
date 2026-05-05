@@ -1,4 +1,5 @@
 /// This module defines heading styles and the chapter page layout for the thesis.
+#import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": font-families, font-sizes, sans-ratio, font-styles
 #import "layout.typ": _blank-page, _is-chapter-page
@@ -178,7 +179,7 @@
   show heading: it => _heading(it, _heading-font-sizes.fallback-title)
 
   // Chapters: level 1 headings.
-  show heading.where(level: 1): set heading(supplement: [Chapter]) // TODO: Make it language-aware.
+  show heading.where(level: 1): set heading(supplement: translate("Chapter"))
 
   show heading.where(level: 1): it => _chapter(output, it)
 
