@@ -17,7 +17,6 @@
 
 /// Spacing values for heading elements.
 #let _heading-skips = (
-  chapter-page-before: 30%,
   chapter-before: 30pt,
   chapter-after: 30pt,
   chapter-label-gap: 15pt,
@@ -76,51 +75,54 @@
 /// Renders a chapter heading with its label, number, and title.
 ///
 /// -> content
-#let _chapter(output, it) = _blank-page(output, weak: true) + block(
-  below: _heading-skips.chapter-after,
-  {
-    let is-numbered = it.numbering != none
+#let _chapter(output, it) = _blank-page(output, weak: true) + {
+  let heading-number = {
+    if it.numbering != none {
+      let heading-counter = counter(heading)
 
-    let heading-number = {
-      if is-numbered {
-        let heading-counter = counter(heading)
-
-        (text(
-          ..font-styles.ui,
-          size: _heading-font-sizes.chapter-label,
-          upper[#it.supplement #num2words(heading-counter.get().at(0))],
-        ))
-
-        v(_heading-skips.chapter-label-gap, weak: true)
-
-        text(
-          size: _heading-font-sizes.chapter-number,
-          fill: palette.text,
-          heading-counter.display(it.numbering),
-        )
-      }
-    }
-
-    let heading-title = block(
-      width: 50%,
       text(
-        size: _heading-font-sizes.chapter-title,
-        fill: palette.text,
-        it.body,
+        ..font-styles.ui,
+        size: _heading-font-sizes.chapter-label,
+        upper[#it.supplement #num2words(heading-counter.get().at(0))],
       )
-    )
-    
-    if _is-chapter-page.get() {
-      v(_heading-skips.chapter-page-before)
-    } else {
-      v(_heading-skips.chapter-before)
-    }
 
-    heading-number
-    v(_heading-skips.chapter-title-gap, weak: true)
-    heading-title
-  },
-)
+      v(_heading-skips.chapter-label-gap, weak: true)
+
+      text(
+        size: _heading-font-sizes.chapter-number,
+        fill: palette.text,
+        heading-counter.display(it.numbering),
+      )
+    }
+  }
+
+  let heading-title = block(
+    width: 50%,
+    text(
+      size: _heading-font-sizes.chapter-title,
+      fill: palette.text,
+      it.body,
+    )
+  )
+
+  let above-skip = if _is-chapter-page.get() {
+    // In the `chapter` function, we insert another `1fr` vertical space after the quote to center the content
+    // vertically in the chapter page.  
+    1fr
+  } else {
+    _heading-skips.chapter-before
+  }
+
+   block(
+    above: above-skip,
+    below: _heading-skips.chapter-after,
+    {
+      heading-number
+      v(_heading-skips.chapter-title-gap, weak: true)
+      heading-title
+    },
+  )
+}
 
 /// Renders a section heading with the section symbol, number, and title.
 ///
@@ -226,9 +228,8 @@
       )
     )
 
-    v(_heading-skips.chapter-quote-gap, weak: true)
-
     block(
+      spacing: _heading-skips.chapter-quote-gap,
       width: 60%, 
       {
         set par(leading: 0.8em)
@@ -253,6 +254,9 @@
       }
     )
   }
+
+  // Close the vertical space inserted before the chapter content by the `_chapter` function.
+  v(1fr)
 
   _is-chapter-page.update(false)
 
