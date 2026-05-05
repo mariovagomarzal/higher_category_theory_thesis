@@ -161,9 +161,11 @@
   /// -> content
   body,
 ) = {
-  // General settings for all headings.
+  // General settings for all headings. We use 'subsection' for the supplement text as it's the lowest level with a
+  // specific style.
   set heading(
     numbering: "1.1.1",
+    supplement: translate("Subsection"),
   )
 
   show heading: set par(
@@ -184,6 +186,8 @@
   show heading.where(level: 1): it => _chapter(output, it)
 
   // Sections: level 2 headings.
+  show heading.where(level: 2): set heading(supplement: translate("Section"))
+
   show heading.where(level: 2): _section
 
   // Subsections: level 3 headings.
