@@ -126,9 +126,6 @@
   /// The degree for which the thesis was submitted.
   /// -> str | content
   degree: [],
-  /// The language of the thesis (default: "en").
-  /// -> str
-  lang: "en",
   /// The output mode of the thesis. Use `"print"` for print-ready output
   /// (chapters start on odd pages) or `"digital"` for screen reading.
   /// -> str
@@ -165,9 +162,6 @@
     description: description,
     date: document-date,
   )
-
-  // Language.
-  set text(lang: lang)
 
   // Other style settings.
   show: _fonts-setup
