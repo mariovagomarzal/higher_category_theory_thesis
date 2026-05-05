@@ -1,4 +1,5 @@
 /// Thesis template entry point.
+#import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": (
   font-families,

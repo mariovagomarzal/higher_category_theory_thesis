@@ -1,0 +1,19 @@
+l10n: std
+
+# English (US). Can be used as the reference for defining other translations.
+en:
+  chapter: "chapter"
+  section: "section"
+  subsection: "subsection"
+
+# Spanish.
+es:
+  chapter: "capítulo"
+  section: "sección"
+  subsection: "subsección"
+
+# Catalan.
+ca:
+  chapter: "capítol"
+  section: "secció"
+  subsection: "subsecció"
