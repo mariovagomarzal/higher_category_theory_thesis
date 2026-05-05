@@ -2,6 +2,7 @@
 #import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": font-styles, sans-ratio
+#import "headings.typ": _heading-skips
 
 /// Font sizes used by the abstract pages.
 #let _abstracts-font-sizes = (
@@ -11,7 +12,7 @@
 
 /// Spacing values for the abstract page layout.
 #let _abstracts-skips = (
-  lang-label-gap: 10pt,
+  lang-label-gap: -_heading-skips.chapter-after / 2,
   body-gap: 25pt,
   rule-gap: 25pt,
   keywords-gap: 12pt,
@@ -33,13 +34,14 @@
   keywords,
 ) = {
   set text(lang: lang)
-  
+
   set par(first-line-indent: 0pt)
 
   heading(level: 1, numbering: none, translate("Abstract"))
 
+  v(_abstracts-skips.lang-label-gap)
+
   block(
-    above: _abstracts-skips.lang-label-gap,
     text(
       ..font-styles.ui,
       size: _abstracts-font-sizes.lang-name * sans-ratio,
