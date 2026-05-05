@@ -56,13 +56,15 @@
   above: _heading-skips.heading-before,
   below: _heading-skips.heading-after,
   block({
-    text(
-      ..font-styles.ui,
-      size: _number-size(title-size),
-      counter(heading).display(it.numbering),
-    )
+    if it.numbering != none {
+      text(
+        ..font-styles.ui,
+        size: _number-size(title-size),
+        counter(heading).display(it.numbering),
+      )
 
-    h(_heading-skips.heading-number-gap)
+      h(_heading-skips.heading-number-gap)
+    }
 
     text(
       size: title-size,
@@ -131,13 +133,15 @@
   above: _heading-skips.section-before,
   below: _heading-skips.section-after,
   {
-    text(
-      ..font-styles.ui,
-      size: _number-size(_heading-font-sizes.section-title),
-      [#sym.section #counter(heading).display(it.numbering)],
-    )
+    if it.numbering != none {
+      text(
+        ..font-styles.ui,
+        size: _number-size(_heading-font-sizes.section-title),
+        [#sym.section #counter(heading).display(it.numbering)],
+      )
 
-    v(_heading-skips.section-title-gap, weak: true)
+      v(_heading-skips.section-title-gap, weak: true)
+    }
 
     text(
       size: _heading-font-sizes.section-title,
