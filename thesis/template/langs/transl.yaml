@@ -2,6 +2,7 @@ l10n: std
 
 # English (US). Can be used as the reference for defining other translations.
 en:
+  lang-name: "English"
   chapter: "chapter"
   section: "section"
   subsection: "subsection"
@@ -11,9 +12,12 @@ en:
   supervisors: "supervisors"
   department: "department"
   defence: "defence"
+  abstract: "abstract"
+  keywords: "keywords"
 
 # Spanish.
 es:
+  lang-name: "español"
   chapter: "capítulo"
   section: "sección"
   subsection: "subsección"
@@ -23,9 +27,12 @@ es:
   supervisors: "supervisores"
   department: "departamento"
   defence: "defensa"
+  abstract: "resumen"
+  keywords: "palabras clave"
 
 # Catalan.
 ca:
+  lang-name: "català"
   chapter: "capítol"
   section: "secció"
   subsection: "subsecció"
@@ -35,3 +42,5 @@ ca:
   supervisors: "supervisors"
   department: "departament"
   defence: "defensa"
+  abstract: "resum"
+  keywords: "paraules clau"

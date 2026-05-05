@@ -12,6 +12,7 @@
 #import "headings.typ": _headings-setup, chapter
 #import "title-page.typ": title-page
 #import "acknowledgements.typ": acknowledgements-page
+#import "abstracts.typ": abstracts
 
 /// Auxiliary function to format a single author/supervisor entry.
 ///
@@ -134,6 +135,10 @@
   /// The copyright/license notice displayed in the colophon below the acknowledgements.
   /// -> str | content
   copyright: [],
+  /// Abstract entries, each a dictionary with `lang` (language code), `abstract` (body content), and `keywords`
+  /// (list of keywords).
+  /// -> array
+  abstract: (),
   /// The output mode of the thesis. Use `"print"` for print-ready output or `"digital"` for screen reading.
   /// -> str
   output: "digital",
@@ -208,6 +213,9 @@
       date: document-date,
       output: output,
     )
+
+    // Abstract pages.
+    abstracts(entries: abstract)
 
     _page-display.update("1")
   }
