@@ -27,7 +27,7 @@
       affiliation: author.at("affiliation", default: none),
     )
   } else {
-    error("Invalid author/supervisor format")
+    panic("Invalid author/supervisor format")
   }
 }
 
