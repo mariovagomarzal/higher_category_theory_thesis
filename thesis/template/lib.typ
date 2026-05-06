@@ -1,5 +1,5 @@
 /// Thesis template entry point.
-#import "langs/translations.typ": translate
+#import "langs/translations.typ": translate, translations
 #import "colors.typ": palette
 #import "fonts.typ": (
   font-families,
@@ -8,11 +8,12 @@
   font-styles,
   _fonts-setup
 )
-#import "layout.typ": margins, _layout-setup, _page-display
+#import "layout.typ": _blank-page, margins, _layout-setup
 #import "headings.typ": _headings-setup, chapter
 #import "title-page.typ": title-page
 #import "acknowledgements.typ": acknowledgements-page
 #import "abstracts.typ": abstracts
+#import "outline.typ": outline-page
 
 /// Auxiliary function to format a single author/supervisor entry.
 ///
@@ -182,7 +183,7 @@
 
   // Front matter elements.
   {
-    set page(numbering: "I")
+    set page(numbering: "i")
 
     // Title page.
     title-page(
@@ -217,8 +218,13 @@
     // Abstract pages.
     abstracts(entries: abstract)
 
-    set page(numbering: "1")
+    // Contents page.
+    outline-page()
 
+    // Transition to body: break to a fresh recto and reset the page counter.
+    // Even though the chapters already start on a fresh recto, this ensures that the page numbering of the first
+    // chapter page of the main matter starts on an odd page, as is customary. 
+    _blank-page(output, weak: true)
     counter(page).update(1)
   }
 
