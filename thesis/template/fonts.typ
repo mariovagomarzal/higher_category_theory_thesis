@@ -25,6 +25,13 @@
   ),
 )
 
+#let _font-display-names = (
+  serif: "EB Garamond",
+  sans: "Fira Sans",
+  math: "Garamond Math",
+  monospace: "Julia Mono",
+)
+
 /// Font sizes used throughout the thesis.
 #let font-sizes = (
   normal: 11pt,

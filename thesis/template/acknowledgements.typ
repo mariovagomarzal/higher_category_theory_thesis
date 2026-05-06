@@ -1,7 +1,7 @@
 /// This module defines the acknowledgements page and the colophon (copyright notice) of the thesis.
 #import "langs/translations.typ": translate
 #import "colors.typ": palette
-#import "fonts.typ": font-families, font-styles, sans-ratio
+#import "fonts.typ": font-families, _font-display-names, font-styles, sans-ratio
 #import "layout.typ": margins, _blank-page
 
 /// Font sizes used by the acknowledgements page.
@@ -125,6 +125,9 @@
           #_copyright-line(authors, date)
 
           #copyright
+
+          Typeset with Typst #sys.version. Using #_font-display-names.serif as serif font; #_font-display-names.sans as
+          sans font; #_font-display-names.math as math font; #_font-display-names.monospace as monospace font.
 
           #_copyright-footer(version, location, date)
         ],
