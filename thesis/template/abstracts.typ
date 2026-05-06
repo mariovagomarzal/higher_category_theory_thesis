@@ -35,7 +35,10 @@
 ) = {
   set text(lang: lang)
 
-  set par(first-line-indent: 0pt)
+  set par(
+    justify: true,
+    first-line-indent: 0pt,
+  )
 
   heading(level: 1, numbering: none, translate("Abstract"))
 
