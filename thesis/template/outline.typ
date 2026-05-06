@@ -1,15 +1,15 @@
-/// TODO: Document.
+/// This module defines the table of contents page for the thesis.
 #import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": sans-ratio, font-styles
 
-/// TODO: Document.
+/// Font sizes used by the outline.
 #let _outline-font-sizes = (
   chapter-entry: 12pt,
   section-entry: 11pt,
 )
 
-/// TODO: Document.
+/// Spacing values for the outline layout.
 #let _outline-skips = (
   chapter-entry-before: 10pt,
   chapter-entry-after: 10pt,
@@ -19,11 +19,15 @@
   section-entry-column: 15pt,
 )
 
-/// TODO: Document.
+/// State tracking whether the next outline entry is the first one, used to draw a stronger top rule.
 #let _is-outline-first-entry = state("_is-outline-first-entry", true)
 
-/// TODO: Document.
+/// Renders a chapter-level outline entry with its prefix, title, and page number, separated by a horizontal rule.
+///
+/// -> content
 #let _chapter-entry(
+  /// The outline entry to render.
+  /// -> content
   entry,
 ) = {
   let stroke = if _is-outline-first-entry.get() {
@@ -77,8 +81,12 @@
   _is-outline-first-entry.update(false)
 }
 
-/// TODO: Document.
+/// Renders a section-level outline entry with its prefix, title, and page number in a muted style.
+///
+/// -> content
 #let _section-entry(
+  /// The outline entry to render.
+  /// -> content
   entry,
 ) = {
   let prefix = if entry.element.numbering == none {
@@ -118,8 +126,12 @@
   )
 }
 
-/// TODO: Document.
+/// Dispatches an outline entry to the appropriate renderer based on its level.
+///
+/// -> content
 #let _outline-entry(
+  /// The outline entry to render.
+  /// -> content
   entry,
 ) = {
   if entry.level == 1 {
@@ -131,7 +143,9 @@
   }
 }
 
-/// TODO: Document.
+/// Produces the table of contents page with chapter and section entries.
+///
+/// -> content
 #let outline-page() = {
   show outline: set heading(outlined: true, numbering: none)
 
