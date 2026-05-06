@@ -12,8 +12,10 @@ en:
   supervisors: "supervisors"
   department: "department"
   defence: "defence"
+  acknowledgements: "acknowledgements"
   abstract: "abstract"
   keywords: "keywords"
+  contents: "contents"
 
 # Spanish.
 es:
@@ -27,8 +29,10 @@ es:
   supervisors: "supervisores"
   department: "departamento"
   defence: "defensa"
+  acknowledgements: "agradecimientos"
   abstract: "resumen"
   keywords: "palabras clave"
+  contents: "índice"
 
 # Catalan.
 ca:
@@ -42,5 +46,7 @@ ca:
   supervisors: "supervisors"
   department: "departament"
   defence: "defensa"
+  acknowledgements: "agraïments"
   abstract: "resum"
   keywords: "paraules clau"
+  contents: "índex"
