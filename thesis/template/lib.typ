@@ -10,6 +10,7 @@
 )
 #import "layout.typ": _blank-page, margins, _layout-setup
 #import "headings.typ": _headings-setup, chapter
+#import "bibliography.typ": _bibliography-setup
 #import "title-page.typ": title-page
 #import "acknowledgements.typ": acknowledgements-page
 #import "abstracts.typ": abstracts
@@ -180,6 +181,7 @@
   show: _fonts-setup
   show: _layout-setup.with(output: output)
   show: _headings-setup.with(output: output)
+  show: _bibliography-setup
 
   // Front matter elements.
   {
