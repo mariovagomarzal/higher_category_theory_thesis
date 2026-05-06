@@ -8,9 +8,10 @@
   font-styles,
   _fonts-setup
 )
-#import "layout.typ": _blank-page, margins, _layout-setup
+#import "layout.typ": _blank-page, margins, par-spacing, _layout-setup
 #import "headings.typ": _headings-setup, chapter
 #import "bibliography.typ": _bibliography-setup
+#import "theorems.typ" as theorems: _theorems-setup
 #import "title-page.typ": title-page
 #import "acknowledgements.typ": acknowledgements-page
 #import "abstracts.typ": abstracts
@@ -182,6 +183,7 @@
   show: _layout-setup.with(output: output)
   show: _headings-setup.with(output: output)
   show: _bibliography-setup
+  show: _theorems-setup
 
   // Front matter elements.
   {

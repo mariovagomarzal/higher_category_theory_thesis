@@ -35,6 +35,12 @@
   inside: 3cm,
 )
 
+/// Paragraph spacing used throughout the thesis.
+#let par-spacing = (
+  leading: 0.65em,
+  first-line-indent: 1.25em,
+)
+
 /// Hydra display function rendering a chapter.
 ///
 /// -> content
@@ -138,8 +144,8 @@
   // Paragraph settings.
   set par(
     justify: true,
-    leading: 0.65em,
-    first-line-indent: 1.25em,
+    leading: par-spacing.leading,
+    first-line-indent: par-spacing.first-line-indent,
   )
 
   body
