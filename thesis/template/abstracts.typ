@@ -32,6 +32,9 @@
   /// The list of keywords associated with the abstract.
   /// -> array
   keywords,
+  /// Whether the abstract heading appears in the outline.
+  /// -> bool
+  outlined: false,
 ) = {
   set text(lang: lang)
 
@@ -40,7 +43,7 @@
     first-line-indent: 0pt,
   )
 
-  heading(level: 1, numbering: none, translate("Abstract"))
+  heading(level: 1, numbering: none, outlined: outlined, translate("Abstract"))
 
   v(_abstracts-skips.lang-label-gap)
 
@@ -93,7 +96,12 @@
   /// -> array
   entries: (),
 ) = {
-  for entry in entries {
-    _abstract-page(entry.lang, entry.abstract, entry.keywords)
+  for (pos, entry) in entries.enumerate() {
+    _abstract-page(
+      entry.lang,
+      entry.abstract,
+      entry.keywords,
+      outlined: pos == 0,
+    )
   }
 }
