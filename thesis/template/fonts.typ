@@ -28,6 +28,7 @@
 /// Font sizes used throughout the thesis.
 #let font-sizes = (
   normal: 11pt,
+  caption: 10pt,
   footnote: 9pt,
 )
 
@@ -63,6 +64,12 @@
     ..font-styles.normal,
     size: font-sizes.normal,
     fallback: false,
+  )
+
+  // Caption text font settings.
+  show figure.caption: set text(
+    ..font-styles.normal,
+    size: font-sizes.caption,
   )
 
   // Footnote text font settings.
