@@ -120,14 +120,14 @@
         if output == "print" and calc.even(here().page()) {
           if not _is-blank-page.get() {
             _header(
-              counter(page).display(_page-display.get()),
+              counter(page).display(),
               hydra(1, display: _chapter-display, book: true),
             )
           };
         } else {
           _header(
             hydra(2, display: _section-display, book: output == "print"),
-            counter(page).display(_page-display.get()),
+            counter(page).display(),
           )
         }
       }

@@ -182,7 +182,7 @@
 
   // Front matter elements.
   {
-    _page-display.update("I")
+    set page(numbering: "I")
 
     // Title page.
     title-page(
@@ -217,7 +217,9 @@
     // Abstract pages.
     abstracts(entries: abstract)
 
-    _page-display.update("1")
+    set page(numbering: "1")
+
+    counter(page).update(1)
   }
 
   body
