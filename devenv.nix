@@ -10,6 +10,7 @@
       "${pkgs.eb-garamond}"
       "${pkgs.texlivePackages.garamond-math}"
       "${pkgs.fira-sans}"
+      "${pkgs.julia-mono}"
     ];
   };
 

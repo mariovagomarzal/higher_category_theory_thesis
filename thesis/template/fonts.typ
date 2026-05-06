@@ -20,17 +20,24 @@
   math: (
     font: "Garamond-Math",
   ),
+  monospace: (
+    font: "JuliaMono",
+  ),
 )
-
-/// Scaling factor applied to sans-serif font sizes so they appear optically matched to the serif text.
-#let sans-ratio = 0.8
 
 /// Font sizes used throughout the thesis.
 #let font-sizes = (
   normal: 11pt,
   caption: 10pt,
+  raw: 10pt,
   footnote: 9pt,
 )
+
+/// Scaling factor applied to sans-serif font sizes so they appear optically matched to the serif text.
+#let sans-ratio = 0.8
+
+/// Sacaling factor applied to monospace font sizes so they appear optically matched to the serif text.
+#let monospace-ratio = 0.85
 
 /// Font styles used throughout the thesis.
 #let font-styles = (
@@ -81,6 +88,12 @@
   // Math font settings.
   show math.equation: set text(
     ..font-families.math,
+  )
+
+  // Raw block font settings.
+  show raw: set text(
+    ..font-families.monospace,
+    size: font-sizes.raw * monospace-ratio,
   )
 
   body

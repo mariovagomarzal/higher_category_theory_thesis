@@ -11,6 +11,7 @@
 #import "layout.typ": _blank-page, margins, par-spacing, _layout-setup
 #import "headings.typ": _headings-setup, chapter
 #import "figures.typ": _figures-setup
+#import "codes.typ": codly-module, _codes-setup, raw-header
 #import "bibliography.typ": _bibliography-setup
 #import "theorems.typ" as theorems: _theorems-setup
 #import "title-page.typ": title-page
@@ -184,6 +185,7 @@
   show: _layout-setup.with(output: output)
   show: _headings-setup.with(output: output)
   show: _figures-setup
+  show: _codes-setup
   show: _bibliography-setup
   show: _theorems-setup
 
