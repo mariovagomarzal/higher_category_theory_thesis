@@ -1,4 +1,5 @@
 /// This module defines the acknowledgements page and the colophon (copyright notice) of the thesis.
+#import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": font-families, font-styles, sans-ratio
 #import "layout.typ": margins, _blank-page
@@ -66,6 +67,18 @@
   output: "digital",
 ) = {
   _blank-page(output, weak: true)
+
+  // Create an invsible level 1 heading to appear in the outline.
+  {
+    show heading.where(level: 1): it => {}
+
+    heading(
+      level: 1,
+      numbering: none,
+      outlined: true,
+      translate("Acknowledgements"),
+    )
+  }
 
   set page(
     margin: margins.normal,
