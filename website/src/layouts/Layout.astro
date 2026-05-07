@@ -1,0 +1,59 @@
+---
+import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/600.css";
+import "@fontsource/open-sans/700.css";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    background: #f6f7fb;
+    line-height: 1.5;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  }
+
+  button,
+  input,
+  a {
+    font: inherit;
+    color: inherit;
+  }
+</style>

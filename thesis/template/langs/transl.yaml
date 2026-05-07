@@ -1,0 +1,58 @@
+l10n: std
+
+# English (US). Can be used as the reference for defining other translations.
+en:
+  lang-name: "English"
+  chapter: "chapter"
+  section: "section"
+  subsection: "subsection"
+  bibliography: "bibliography"
+  proof: "proof"
+  author: "author"
+  authors: "authors"
+  supervisor: "supervisor"
+  supervisors: "supervisors"
+  department: "department"
+  defence: "defence"
+  acknowledgements: "acknowledgements"
+  abstract: "abstract"
+  keywords: "keywords"
+  contents: "contents"
+
+# Spanish.
+es:
+  lang-name: "español"
+  chapter: "capítulo"
+  section: "sección"
+  subsection: "subsección"
+  bibliography: "bibliografía"
+  proof: "demostración"
+  author: "autor"
+  authors: "autores"
+  supervisor: "supervisor"
+  supervisors: "supervisores"
+  department: "departamento"
+  defence: "defensa"
+  acknowledgements: "agradecimientos"
+  abstract: "resumen"
+  keywords: "palabras clave"
+  contents: "contenidos"
+
+# Catalan.
+ca:
+  lang-name: "català"
+  chapter: "capítol"
+  section: "secció"
+  subsection: "subsecció"
+  bibliography: "bibliografia"
+  proof: "demostració"
+  author: "autor"
+  authors: "autors"
+  supervisor: "supervisor"
+  supervisors: "supervisors"
+  department: "departament"
+  defence: "defensa"
+  acknowledgements: "agraïments"
+  abstract: "resum"
+  keywords: "paraules clau"
+  contents: "continguts"

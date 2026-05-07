@@ -1,0 +1,19 @@
+# Build output.
+dist/
+
+# Generated types.
+.astro/
+
+# Dependencies.
+node_modules/
+
+# Logs.
+npm-debug.log*
+pnpm-debug.log*
+
+# Environment variables.
+.env
+.env.production
+
+# Pre-compiled PDFs.
+public/pdfs/*.pdf

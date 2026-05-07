@@ -3,16 +3,44 @@
     GREET = "Thesis development environment";
   };
 
+  # Typst support.
   languages.typst = {
     enable = true;
-    fontPaths = ["${pkgs.lmodern}/share/fonts/opentype/public/lm"];
+    fontPaths = [
+      "${pkgs.eb-garamond}"
+      "${pkgs.texlivePackages.garamond-math}"
+      "${pkgs.fira-sans}"
+      "${pkgs.julia-mono}"
+    ];
   };
 
+  # Typst-related environment variables.
+  env = {
+    TYPST_ROOT = "thesis";
+    TYPST_IGNORE_SYSTEM_FONTS = "true";
+  };
+
+  # Python support.
+  languages.python.enable = true;
+
+  # JavaScript / Astro support.
+  languages.javascript = {
+    enable = true;
+    package = pkgs.nodejs_24;
+    directory = "website";
+    pnpm = {
+      enable = true;
+      install.enable = true;
+    };
+  };
+
+  # Core development tools.
   packages = with pkgs; [
     just
     git
   ];
 
+  # Git hooks.
   git-hooks = {
     hooks = {
       gitlint = {
@@ -23,7 +51,6 @@
 
       markdownlint = {
         enable = true;
-        excludes = ["^website/"];
         description = "Run markdownlint to check Markdown files";
       };
 
@@ -34,6 +61,7 @@
     };
   };
 
+  # Extra configuration files to symlink.
   files = {
     ".gitlint".ini = {
       general = {
@@ -46,6 +74,7 @@
     };
   };
 
+  # Enter shell task.
   enterShell = ''
     echo $GREET
   '';
