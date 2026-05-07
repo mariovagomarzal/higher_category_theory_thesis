@@ -35,13 +35,7 @@
   faculty: faculties.at(lang),
   department: departments.at(lang),
   degree: degrees.at(lang),
-  acknowledgements: text(lang: "ca", [
-    A la meua família,
-    #linebreak()
-    ---
-    #linebreak()
-    per ensenyar-me que les que es construeixen amb cura duren més que les que es proven sense.
-  ]),
+  acknowledgements: [],
   copyright: copyrights.at(lang),
   abstract: abstracts,
   output: output,
