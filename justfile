@@ -7,6 +7,8 @@ default:
 # Paths.
 thesis_entrypoint := "main.typ"
 thesis_output := "main.pdf"
+website_dir := "website"
+pdfs_dir := website_dir / "public" / "pdfs"
 
 [group("thesis")]
 [doc("Compile the thesis with Typst.")]
@@ -28,6 +30,31 @@ watch *args:
     python scripts/compile.py --watch $TYPST_ROOT/{{thesis_entrypoint}} {{args}}
 
 alias w := watch
+
+[private]
+[group("website")]
+[doc("Copy compiled thesis PDFs into the website public folder.")]
+assets: compile-all
+    mkdir -p {{pdfs_dir}}
+    cp $TYPST_ROOT/main-*-*.pdf {{pdfs_dir}}/
+
+[group("website")]
+[working-directory("website")]
+[doc("Run the Astro dev server.")]
+dev: assets
+    pnpm dev
+
+[group("website")]
+[working-directory("website")]
+[doc("Build the Astro site.")]
+build: assets
+    pnpm build
+
+[group("website")]
+[working-directory("website")]
+[doc("Preview the built Astro site.")]
+preview: assets
+    pnpm preview
 
 [group("style")]
 format-typst input_files="$TYPST_ROOT":

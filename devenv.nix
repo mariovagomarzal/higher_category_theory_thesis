@@ -23,6 +23,17 @@
   # Python support.
   languages.python.enable = true;
 
+  # JavaScript / Astro support.
+  languages.javascript = {
+    enable = true;
+    package = pkgs.nodejs_24;
+    directory = "website";
+    pnpm = {
+      enable = true;
+      install.enable = true;
+    };
+  };
+
   # Core development tools.
   packages = with pkgs; [
     just
