@@ -18,7 +18,8 @@ const outputs = [
 const defaultLang = "en";
 const defaultOutput = "digital";
 const defaultFile = `main-${defaultLang}-${defaultOutput}.pdf`;
-const defaultPdf = `/pdfs/${defaultFile}`;
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
+const defaultPdf = `${baseUrl}/pdfs/${defaultFile}`;
 ---
 
 <Layout title={title}>
@@ -320,13 +321,14 @@ const defaultPdf = `/pdfs/${defaultFile}`;
   const status = document.getElementById("preview-status");
 
   if (form && frame && link && status) {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     form.addEventListener("change", () => {
       const data = new FormData(form);
       const lang = data.get("lang");
       const output = data.get("output");
       if (typeof lang !== "string" || typeof output !== "string") return;
       const filename = `main-${lang}-${output}.pdf`;
-      const path = `/pdfs/${filename}`;
+      const path = `${base}/pdfs/${filename}`;
       frame.src = path;
       link.href = path;
       status.textContent = filename;
