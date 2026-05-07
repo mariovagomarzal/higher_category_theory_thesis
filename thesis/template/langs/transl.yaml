@@ -36,7 +36,7 @@ es:
   acknowledgements: "agradecimientos"
   abstract: "resumen"
   keywords: "palabras clave"
-  contents: "índice"
+  contents: "contenidos"
 
 # Catalan.
 ca:
@@ -55,4 +55,4 @@ ca:
   acknowledgements: "agraïments"
   abstract: "resum"
   keywords: "paraules clau"
-  contents: "índex"
+  contents: "continguts"
