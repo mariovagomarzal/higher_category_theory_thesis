@@ -8,25 +8,26 @@ default:
 thesis_entrypoint := "main.typ"
 thesis_output := "main.pdf"
 
-# Sets SOURCE_DATE_EPOCH so Typst produces reproducible output for the current invocation.
-source_date_epoch := "SOURCE_DATE_EPOCH=$(date +%s)"
-
-# Typst custom input arguments.
-default_lang := "en"
-default_output := "digital"
-input_arg(arg_name, arg_value) := "--input " + arg_name + "=" + arg_value
-
 [group("thesis")]
 [doc("Compile the thesis with Typst.")]
-compile lang=default_lang output=default_output:
-    {{source_date_epoch}} typst compile {{input_arg("lang", lang)}} {{input_arg("output", output)}} \
-        $TYPST_ROOT/{{thesis_entrypoint}}
+compile *args:
+    python scripts/compile.py $TYPST_ROOT/{{thesis_entrypoint}} {{args}}
+
+alias c := compile
+
+[group("thesis")]
+[doc("Compile all language and output mode combinations of the thesis with Typst.")]
+compile-all:
+    python scripts/compile.py --all $TYPST_ROOT/{{thesis_entrypoint}}
+
+alias ca := compile-all
 
 [group("thesis")]
 [doc("Watch the thesis source files and recompile on changes.")]
-watch lang=default_lang output=default_output:
-    {{source_date_epoch}} typst watch {{input_arg("lang", lang)}} {{input_arg("output", output)}} \
-        $TYPST_ROOT/{{thesis_entrypoint}}
+watch *args:
+    python scripts/compile.py --watch $TYPST_ROOT/{{thesis_entrypoint}} {{args}}
+
+alias w := watch
 
 [group("style")]
 format-typst input_files="$TYPST_ROOT":

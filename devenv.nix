@@ -20,6 +20,9 @@
     TYPST_IGNORE_SYSTEM_FONTS = "true";
   };
 
+  # Python support.
+  languages.python.enable = true;
+
   # Core development tools.
   packages = with pkgs; [
     just
