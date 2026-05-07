@@ -1,16 +1,335 @@
 ---
+import Layout from "../layouts/Layout.astro";
+
 const title = "A Formalization of Higher-Order Categories in Lean 4";
+const fileLabel = "thesis/main.typ";
+
+const languages = [
+  { code: "en", name: "English" },
+  { code: "es", name: "Spanish" },
+  { code: "ca", name: "Catalan" },
+];
+
+const outputs = [
+  { code: "digital", name: "Digital" },
+  { code: "print", name: "Print" },
+];
+
+const defaultLang = "en";
+const defaultOutput = "digital";
+const defaultFile = `main-${defaultLang}-${defaultOutput}.pdf`;
+const defaultPdf = `/pdfs/${defaultFile}`;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <h1>{title}</h1>
-    <p>Website under construction.</p>
-  </body>
-</html>
+<Layout title={title}>
+  <main class="app">
+    <aside class="sidebar">
+      <header class="sidebar__header">
+        <p class="sidebar__brand">Bachelor's thesis · Compiler</p>
+        <h1 class="sidebar__title">{title}</h1>
+        <p class="sidebar__path">{fileLabel}</p>
+      </header>
+
+      <form class="sidebar__form" id="config-form">
+        <fieldset class="field">
+          <legend class="field__title">Language</legend>
+          <p class="field__hint">Document language for the rendered thesis</p>
+          <div class="segmented">
+            {
+              languages.map((lang) => (
+                <label class="segment">
+                  <input
+                    type="radio"
+                    name="lang"
+                    value={lang.code}
+                    checked={lang.code === defaultLang}
+                  />
+                  <span>{lang.name}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="field__title">Output</legend>
+          <p class="field__hint">Target medium for typesetting</p>
+          <div class="segmented">
+            {
+              outputs.map((output) => (
+                <label class="segment">
+                  <input
+                    type="radio"
+                    name="output"
+                    value={output.code}
+                    checked={output.code === defaultOutput}
+                  />
+                  <span>{output.name}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+      </form>
+    </aside>
+
+    <section class="preview">
+      <header class="preview__bar">
+        <div class="preview__meta">
+          <p class="preview__label">Preview</p>
+          <p class="preview__status" id="preview-status">{defaultFile}</p>
+        </div>
+        <a
+          class="preview__download"
+          id="download-link"
+          href={defaultPdf}
+          download
+        >
+          Download PDF
+        </a>
+      </header>
+      <div class="preview__viewer">
+        <iframe id="pdf-frame" src={defaultPdf} title="Thesis PDF preview"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .app {
+    display: grid;
+    grid-template-columns: minmax(320px, 400px) 1fr;
+    height: 100vh;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    overflow-y: auto;
+  }
+
+  .sidebar__header {
+    background: linear-gradient(120deg, #275dad, #420039);
+    color: #ffffff;
+    padding: 2rem 1.75rem;
+  }
+
+  .sidebar__brand {
+    margin: 0 0 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .sidebar__title {
+    margin: 0 0 0.75rem;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+
+  .sidebar__path {
+    margin: 0;
+    font-size: 0.85rem;
+    font-family:
+      Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    opacity: 0.85;
+  }
+
+  .sidebar__form {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    border: 0;
+  }
+
+  .field {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .field__title {
+    padding: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .field__hint {
+    margin: 0 0 0.25rem;
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+
+  .segmented {
+    display: flex;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .segment {
+    flex: 1;
+    position: relative;
+    padding: 0.6rem 0.75rem;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .segment + .segment {
+    border-left: 1px solid #e5e7eb;
+  }
+
+  .segment input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .segment:hover:not(:has(input:checked)) {
+    background: #f6f7fb;
+  }
+
+  .segment:has(input:checked) {
+    background: #f0f4ff;
+    color: #275dad;
+  }
+
+  .segment:has(input:focus-visible) {
+    outline: 2px solid #275dad;
+    outline-offset: -2px;
+  }
+
+  .preview {
+    display: flex;
+    flex-direction: column;
+    background: #f6f7fb;
+    min-width: 0;
+  }
+
+  .preview__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.75rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .preview__meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+  }
+
+  .preview__label {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b7280;
+  }
+
+  .preview__status {
+    margin: 0;
+    font-family:
+      Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.85rem;
+    color: #1f2937;
+  }
+
+  .preview__download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.95rem;
+    background: #275dad;
+    color: #ffffff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+  }
+
+  .preview__download:hover {
+    background: #1d4a8e;
+  }
+
+  .preview__viewer {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    min-height: 0;
+  }
+
+  .preview__viewer iframe {
+    flex: 1;
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  @media (max-width: 800px) {
+    .app {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .sidebar {
+      border-right: 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .preview {
+      min-height: 70vh;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById("config-form") as HTMLFormElement | null;
+  const frame = document.getElementById(
+    "pdf-frame",
+  ) as HTMLIFrameElement | null;
+  const link = document.getElementById(
+    "download-link",
+  ) as HTMLAnchorElement | null;
+  const status = document.getElementById("preview-status");
+
+  if (form && frame && link && status) {
+    form.addEventListener("change", () => {
+      const data = new FormData(form);
+      const lang = data.get("lang");
+      const output = data.get("output");
+      if (typeof lang !== "string" || typeof output !== "string") return;
+      const filename = `main-${lang}-${output}.pdf`;
+      const path = `/pdfs/${filename}`;
+      frame.src = path;
+      link.href = path;
+      status.textContent = filename;
+    });
+  }
+</script>
