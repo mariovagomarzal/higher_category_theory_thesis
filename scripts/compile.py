@@ -63,7 +63,7 @@ def run_typst(
 
     env = os.environ.copy()
     # Set SOURCE_DATE_EPOCH so Typst produces reproducible output for this invocation.
-    env.setdefault("SOURCE_DATE_EPOCH", str(int(time.time())))
+    env["SOURCE_DATE_EPOCH"] = str(int(time.time()))
 
     action = "Watching" if watch else "Compiling"
     print(f"==> {action} {input_file} (lang={lang}, output={output}) -> {out_file}")

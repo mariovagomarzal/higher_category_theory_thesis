@@ -115,9 +115,21 @@
 ))
 
 #let _abstract-keywords = (
-  en: ("higher-order categories", "formalization", "Lean~4"),
-  es: ("categorías de orden superior", "formalización", "Lean~4"),
-  ca: ("categories d'ordre superior", "formalització", "Lean~4"),
+  en: (
+    [higher-order categories],
+    [formalization],
+    [Lean~4],
+  ),
+  es: (
+    [categorías de orden superior],
+    [formalización],
+    [Lean~4],
+  ),
+  ca: (
+    [categories d'ordre superior],
+    [formalització],
+    [Lean~4],
+  ),
 )
 
 #let abstracts = (
