@@ -34,7 +34,7 @@ jobs:
         with:
           name: devenv
       - name: Install devenv
-        run: nix profile install github:cachix/devenv/v2.1
+        run: nix profile install github:cachix/devenv/v2.0.6
       - name: Build the project website within devenv
         run: devenv shell -- just build
       - name: Upload the site as a GitHub Pages artifact
