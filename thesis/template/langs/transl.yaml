@@ -18,6 +18,12 @@ en:
   abstract: "abstract"
   keywords: "keywords"
   contents: "contents"
+  typeset-with: "typeset with"
+  using: "using"
+  as-serif-font: "as serif font"
+  as-sans-font: "as sans font"
+  as-math-font: "as math font"
+  as-monospace-font: "as monospace font"
 
 # Spanish.
 es:
@@ -37,6 +43,12 @@ es:
   abstract: "resumen"
   keywords: "palabras clave"
   contents: "contenidos"
+  typeset-with: "compuesto con"
+  using: "utilizando"
+  as-serif-font: "como fuente serif"
+  as-sans-font: "como fuente sans"
+  as-math-font: "como fuente matemática"
+  as-monospace-font: "como fuente monoespacio"
 
 # Catalan.
 ca:
@@ -56,3 +68,9 @@ ca:
   abstract: "resum"
   keywords: "paraules clau"
   contents: "continguts"
+  typeset-with: "compost amb"
+  using: "utilitzant"
+  as-serif-font: "com a font serif"
+  as-sans-font: "com a font sans"
+  as-math-font: "com a font matemàtica"
+  as-monospace-font: "com a font monoespai"

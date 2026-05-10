@@ -126,8 +126,10 @@
 
           #copyright
 
-          Typeset with Typst #sys.version. Using #_font-display-names.serif as serif font; #_font-display-names.sans as
-          sans font; #_font-display-names.math as math font; #_font-display-names.monospace as monospace font.
+          #translate("Typeset-with") Typst #sys.version. #translate("Using") #_font-display-names.serif
+          #translate("as-serif-font"); #_font-display-names.sans #translate("as-sans-font");
+          #_font-display-names.math #translate("as-math-font"); #_font-display-names.monospace
+          #translate("as-monospace-font").
 
           #_copyright-footer(version, location, date)
         ],
