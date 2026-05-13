@@ -1,5 +1,5 @@
 /// This module defines heading styles and the chapter page layout for the thesis.
-#import "@preview/num2words:0.1.0": num2words
+#import "@preview/num2words:0.2.0": num2words
 #import "langs/translations.typ": translate
 #import "colors.typ": palette
 #import "fonts.typ": font-families, font-sizes, sans-ratio, font-styles
@@ -109,7 +109,7 @@
 
   let above-skip = if _is-chapter-page.get() {
     // In the `chapter` function, we insert another `1fr` vertical space after the quote to center the content
-    // vertically in the chapter page.  
+    // vertically in the chapter page.
     1fr
   } else {
     _heading-skips.chapter-before
@@ -234,12 +234,12 @@
 
     block(
       spacing: _heading-skips.chapter-quote-gap,
-      width: 60%, 
+      width: 60%,
       {
         set par(leading: 0.8em)
 
         set text(fill: palette.text-muted)
-        
+
         text(
           ..font-styles.quote,
           size: font-sizes.normal,
