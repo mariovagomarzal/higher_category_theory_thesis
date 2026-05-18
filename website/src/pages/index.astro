@@ -15,9 +15,15 @@ const outputs = [
   { code: "print", name: "Print" },
 ];
 
+const covers = [
+  { code: "classic", name: "Classic" },
+  { code: "university", name: "University" },
+];
+
 const defaultLang = "en";
 const defaultOutput = "digital";
-const defaultFile = `main-${defaultLang}-${defaultOutput}.pdf`;
+const defaultCover = "classic";
+const defaultFile = `main-${defaultLang}-${defaultOutput}-${defaultCover}.pdf`;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
 const defaultPdf = `${baseUrl}/pdfs/${defaultFile}`;
 ---
@@ -66,6 +72,26 @@ const defaultPdf = `${baseUrl}/pdfs/${defaultFile}`;
                     checked={output.code === defaultOutput}
                   />
                   <span>{output.name}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="field__title">Cover</legend>
+          <p class="field__hint">Title-page style for the thesis cover</p>
+          <div class="segmented">
+            {
+              covers.map((cover) => (
+                <label class="segment">
+                  <input
+                    type="radio"
+                    name="cover"
+                    value={cover.code}
+                    checked={cover.code === defaultCover}
+                  />
+                  <span>{cover.name}</span>
                 </label>
               ))
             }
@@ -326,8 +352,14 @@ const defaultPdf = `${baseUrl}/pdfs/${defaultFile}`;
       const data = new FormData(form);
       const lang = data.get("lang");
       const output = data.get("output");
-      if (typeof lang !== "string" || typeof output !== "string") return;
-      const filename = `main-${lang}-${output}.pdf`;
+      const cover = data.get("cover");
+      if (
+        typeof lang !== "string" ||
+        typeof output !== "string" ||
+        typeof cover !== "string"
+      )
+        return;
+      const filename = `main-${lang}-${output}-${cover}.pdf`;
       const path = `${base}/pdfs/${filename}`;
       frame.src = path;
       link.href = path;

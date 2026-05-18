@@ -16,12 +16,14 @@ class CompileResult(Enum):
 
 LANGS = ("en", "es", "ca")
 OUTPUTS = ("digital", "print")
+COVERS = ("classic", "university")
 DEFAULT_LANG = "en"
 DEFAULT_OUTPUT = "digital"
+DEFAULT_COVER = "classic"
 
 
-def output_path(input_file: Path, lang: str, output: str) -> Path:
-    return input_file.with_name(f"{input_file.stem}-{lang}-{output}.pdf")
+def output_path(input_file: Path, lang: str, output: str, cover: str) -> Path:
+    return input_file.with_name(f"{input_file.stem}-{lang}-{output}-{cover}.pdf")
 
 
 def typst_command(
@@ -31,6 +33,7 @@ def typst_command(
     output_file: Path,
     lang: str,
     output: str,
+    cover: str,
 ) -> list[str]:
     subcommand = "watch" if watch else "compile"
     return [
@@ -40,6 +43,8 @@ def typst_command(
         f"lang={lang}",
         "--input",
         f"output={output}",
+        "--input",
+        f"cover={cover}",
         str(input_file),
         str(output_file),
     ]
@@ -51,14 +56,16 @@ def run_typst(
     input_file: Path,
     lang: str,
     output: str,
+    cover: str,
 ) -> CompileResult:
-    out_file = output_path(input_file, lang, output)
+    out_file = output_path(input_file, lang, output, cover)
     cmd = typst_command(
         watch=watch,
         input_file=input_file,
         output_file=out_file,
         lang=lang,
         output=output,
+        cover=cover,
     )
 
     env = os.environ.copy()
@@ -66,7 +73,7 @@ def run_typst(
     env["SOURCE_DATE_EPOCH"] = str(int(time.time()))
 
     action = "Watching" if watch else "Compiling"
-    print(f"==> {action} {input_file} (lang={lang}, output={output}) -> {out_file}")
+    print(f"==> {action} {input_file} (lang={lang}, output={output}, cover={cover}) -> {out_file}")
 
     if watch:
         process = subprocess.run(cmd, env=env)
@@ -79,7 +86,7 @@ def run_typst(
 
     if process.returncode != 0:
         print(
-            f"Failed: {input_file} (lang={lang}, output={output})",
+            f"Failed: {input_file} (lang={lang}, output={output}, cover={cover})",
             file=sys.stderr,
         )
         return CompileResult.ERROR
@@ -88,33 +95,34 @@ def run_typst(
 
 
 def compile_all(input_file: Path) -> int:
-    combinations = list(itertools.product(LANGS, OUTPUTS))
+    combinations = list(itertools.product(LANGS, OUTPUTS, COVERS))
     print(f"==> Compiling {len(combinations)} variant(s) of {input_file}.")
 
-    succeeded: list[tuple[str, str]] = []
-    failed: list[tuple[str, str]] = []
+    succeeded: list[tuple[str, str, str]] = []
+    failed: list[tuple[str, str, str]] = []
 
-    for lang, output in combinations:
+    for lang, output, cover in combinations:
         result = run_typst(
             watch=False,
             input_file=input_file,
             lang=lang,
             output=output,
+            cover=cover,
         )
         if result == CompileResult.SUCCESS:
-            succeeded.append((lang, output))
+            succeeded.append((lang, output, cover))
         else:
-            failed.append((lang, output))
+            failed.append((lang, output, cover))
 
     if succeeded:
         print(f"\nCompiled {len(succeeded)} variant(s):")
-        for lang, output in succeeded:
-            print(f"  - {output_path(input_file, lang, output)}")
+        for lang, output, cover in succeeded:
+            print(f"  - {output_path(input_file, lang, output, cover)}")
 
     if failed:
         print(f"\nFailed {len(failed)} variant(s):", file=sys.stderr)
-        for lang, output in failed:
-            print(f"  - lang={lang}, output={output}", file=sys.stderr)
+        for lang, output, cover in failed:
+            print(f"  - lang={lang}, output={output}, cover={cover}", file=sys.stderr)
 
     return 1 if failed else 0
 
@@ -146,9 +154,15 @@ def parse_args() -> argparse.Namespace:
         help=f"Output mode (default: {DEFAULT_OUTPUT}).",
     )
     parser.add_argument(
+        "--cover",
+        choices=COVERS,
+        default=DEFAULT_COVER,
+        help=f"Title-page cover style (default: {DEFAULT_COVER}).",
+    )
+    parser.add_argument(
         "--all",
         action="store_true",
-        help="Compile all combinations of language and output mode.",
+        help="Compile all combinations of language, output mode and cover style.",
     )
     return parser.parse_args()
 
@@ -168,6 +182,7 @@ def main() -> None:
         input_file=args.file,
         lang=args.lang,
         output=args.output,
+        cover=args.cover,
     )
     sys.exit(0 if result == CompileResult.SUCCESS else 1)
 

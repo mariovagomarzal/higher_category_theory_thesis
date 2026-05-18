@@ -14,7 +14,8 @@
 #import "codes.typ": codly-module, _codes-setup, raw-header
 #import "bibliography.typ": _bibliography-setup
 #import "theorems.typ" as theorems: _theorems-setup
-#import "title-page.typ": title-page
+#import "title-page/classic.typ" as classic-title-page
+#import "title-page/university.typ" as university-title-page
 #import "acknowledgements.typ": acknowledgements-page
 #import "abstracts.typ": abstracts
 #import "outline.typ": outline-page
@@ -147,6 +148,9 @@
   /// The output mode of the thesis. Use `"print"` for print-ready output or `"digital"` for screen reading.
   /// -> str
   output: "digital",
+  /// The title-page style. Use `"classic"` for the default cover or `"university"` for the university-style cover.
+  /// -> str
+  cover: "classic",
   /// The main content of the thesis.
   /// -> content
   body,
@@ -156,6 +160,19 @@
     output in ("digital", "print",),
     message: "Invalid output mode: expected 'digital' or 'print', got '" + output + "'",
   )
+
+  // Validate cover style.
+  assert(
+    cover in ("classic", "university",),
+    message: "Invalid cover style: expected 'classic' or 'university', got '" + cover + "'",
+  )
+
+  // Select the title-page implementation according to the cover style.
+  let title-page = if cover == "classic" {
+    classic-title-page.title-page
+  } else {
+    university-title-page.title-page
+  }
 
   // Normalize authors and supervisors to arrays of dictionaries with name and affiliation.
   let authors = _format-authors(author)
