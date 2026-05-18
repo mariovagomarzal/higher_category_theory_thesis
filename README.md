@@ -1,7 +1,19 @@
 # Thesis: A Formalization of Higher-Order Categories in Lean 4
 
 This repository contains the source code for my thesis document. The Lean 4 code
-of the formalization can be found in [this repository][formalization-repo].
+of the formalization is tracked as a Git submodule under `thesis/formalization`
+and lives in [this repository][formalization-repo].
+
+## Cloning
+
+Clone the repository with its submodules in one step:
+
+```bash
+git clone --recurse-submodules https://github.com/mariovagomarzal/thesis
+```
+
+If you already cloned the repository without `--recurse-submodules`, run
+`just env` from inside the `devenv shell` to fetch and sync the submodule.
 
 ## Development environment
 

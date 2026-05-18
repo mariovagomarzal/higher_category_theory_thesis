@@ -1,0 +1,3 @@
+[submodule "higher_category_theory"]
+	path = thesis/formalization
+	url = https://github.com/mariovagomarzal/higher_category_theory

@@ -4,6 +4,11 @@ set unstable
 default:
     @just --list --unsorted
 
+[group("env")]
+[doc("Initialize and sync Git submodules (e.g. the Lean 4 formalization).")]
+env:
+    git submodule update --init --recursive
+
 # Paths.
 thesis_entrypoint := "main.typ"
 thesis_output := "main.pdf"
