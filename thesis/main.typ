@@ -14,6 +14,7 @@
 
 #let lang = sys.inputs.lang
 #let output = sys.inputs.output
+#let cover = sys.inputs.cover
 
 #let content-file(lang, path) = "/" + lang + "-contents/" + path
 
@@ -39,6 +40,7 @@
   copyright: copyrights.at(lang),
   abstract: abstracts,
   output: output,
+  cover: cover,
 )
 
 #include content-file(lang, "introduction.typ")

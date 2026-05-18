@@ -1,9 +1,9 @@
 /// This module defines front matter elements such as the title page, acknowledgements, abstracts and tables of contents
 /// for the thesis template.
-#import "langs/translations.typ": translate
-#import "colors.typ": palette
-#import "fonts.typ": sans-ratio, font-styles
-#import "layout.typ": margins, _blank-page
+#import "../langs/translations.typ": translate
+#import "../colors.typ": palette
+#import "../fonts.typ": sans-ratio, font-styles
+#import "../layout.typ": margins, _blank-page
 
 /// Font sizes used by the title page.
 #let _title-page-font-sizes = (

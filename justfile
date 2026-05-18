@@ -18,7 +18,7 @@ compile *args:
 alias c := compile
 
 [group("thesis")]
-[doc("Compile all language and output mode combinations of the thesis with Typst.")]
+[doc("Compile all language, output mode and cover combinations of the thesis with Typst.")]
 compile-all:
     python scripts/compile.py --all $TYPST_ROOT/{{thesis_entrypoint}}
 
@@ -36,7 +36,7 @@ alias w := watch
 [doc("Copy compiled thesis PDFs into the website public folder.")]
 assets: compile-all
     mkdir -p {{pdfs_dir}}
-    cp $TYPST_ROOT/main-*-*.pdf {{pdfs_dir}}/
+    cp $TYPST_ROOT/main-*-*-*.pdf {{pdfs_dir}}/
 
 [group("website")]
 [working-directory("website")]
